@@ -1,0 +1,41 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flower</title>
+</head>
+<script defer>
+    let html = {
+        log: (info)=>{
+            document.body.insertAdjacentHTML('beforeend',  JSON.stringify(cloneAsObject(info)))
+        }
+    }
+
+    function cloneAsObject(obj) {
+        if (obj === null || !(obj instanceof Object)) {
+            return obj;
+        }
+        var temp = (obj instanceof Array) ? [] : {};
+        // ReSharper disable once MissingHasOwnPropertyInForeach
+        for (var key in obj) {
+            temp[key] = cloneAsObject(obj[key]);
+        }
+        return temp;
+    }
+
+    function locate(){
+        navigator.geolocation.getCurrentPosition((position)=>{
+            position.time = Date(position.timestamp) 
+            html.log(position)
+        }, (error)=>{
+            console.log(error)
+            html.log(error)
+        });
+    }
+</script>
+<body>
+    <button onclick="locate()">Locate</button>
+    <button onclick="alert('something')">alert</button>
+</body>
+</html>
